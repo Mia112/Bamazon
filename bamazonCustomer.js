@@ -25,13 +25,31 @@ connection.connect(function (err) {
 
 function displayProducts() {
     connection.query("SELECT * FROM products", function (err, res) {
-        console.log("Id | Product | Price | Department");
+        if (err) throw err;
+
+
         console.log("---------------------------------------------");
+        console.log("            WELCOME TO BAMAZON!             ");
+        console.log("---------------------------------------------");
+        console.log("");
+        console.log("           Shop the Products Below           ");
+        console.log("");
+        console.log("Product Id | Product Description | Price | Department");
+        console.log("-------------------------------------------------------");
         for (let i = 0; i < res.length; i++) {
             console.log(res[i].item_id + " | " + res[i].product_name + " | " + "$" + res[i].price + " | " + res[i].department_name);
-            console.log("-------------------------------------------");
+            console.log("-------------------------------------------------------");
 
         }
     })
 };
 
+// function shopProducts() {
+//     connection.query("SELECT * FROM products", function (err, res) {
+//         inquirer.prompt([
+//             {
+//                 name: "choice"
+//             }
+//         ])
+//     })
+// };
