@@ -85,7 +85,6 @@ function customerPrompt() {
         const quantity = parseInt(answer.quantity);
 
         // Query db to confirm that the given item ID exists in the desired quantity
-        // const queryStr = 'SELECT * FROM products WHERE ?';
         const querySql = 'SELECT * FROM products WHERE ?';
         connection.query(querySql, {item_id: item}, function (err, res) {
             if (err) throw err;
@@ -110,8 +109,7 @@ function customerPrompt() {
                     connection.query(updateSql, function (err, res) {
                         if (err) throw err;
 
-                        
-
+                
                         console.log('Your oder has been placed! ');
                         console.log("\n---------------------------------------------------------------------\n")
                         console.log('Your total is $' + productData.price * quantity);
