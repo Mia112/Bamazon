@@ -44,7 +44,7 @@ function displayProducts() {
             head: ["Item ID", "Product Name", "Catergory", "Price", "Quantity"],
             colWidths: [10, 25, 25, 10, 14]
         });
-        //
+        //loop through and display o
         for (let i = 0; i < res.length; i++) {
             productTable.push(
                 [res[i].item_id, res[i].product_name, res[i].department_name, "$" + res[i].price, res[i].stock_quantity]
@@ -90,9 +90,7 @@ function customerPrompt() {
         connection.query(querySql, {item_id: item}, function (err, res) {
             if (err) throw err;
 
-            // If the user has selected an invalid item ID, data attay will be empty
-            // console.log('data = ' + JSON.stringify(data));
-
+            //if an invalid input is made display this message
             if (res.length === 0) {
                 console.log('ERROR: Invalid Item ID. Please select a valid Item ID.');
                 displayProducts();
@@ -100,16 +98,13 @@ function customerPrompt() {
             } else {
                 let productData = res[0];
 
-                // console.log('productData = ' + JSON.stringify(productData));
-                // console.log('productData.stock_quantity = ' + productData.stock_quantity);
-
-                // If the quantity requested by the user is in stock
+                // check if the quantity requested is not more than the quantity available
                 if (quantity <= productData.stock_quantity) {
                     console.log('Congratulations, the product you requested is in stock! Placing order!');
 
-                    // Construct the updating query string
-                    var updateSql = 'UPDATE products SET stock_quantity = ' + (productData.stock_quantity - quantity) + ' WHERE item_id = ' + item;
-                    // console.log(productTable.updateSql);
+                    // update the sql database 
+                    const updateSql = 'UPDATE products SET stock_quantity = ' + (productData.stock_quantity - quantity) + ' WHERE item_id = ' + item;
+                  
 
                     // Update the inventory
                     connection.query(updateSql, function (err, res) {
