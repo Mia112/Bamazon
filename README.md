@@ -5,4 +5,4 @@ In the app, Customer can view products and make purchases by entering the produc
 
 See demo below:
 
-![Customer Demo](demo.gif)
+![Demo Animation](/Users/msheriff/Bamazon/demo.gif)
