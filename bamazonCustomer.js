@@ -18,8 +18,7 @@ const connection = mysql.createConnection({
 //on load, if there is an error, throw the error
 connection.connect(function (err) {
     if (err) throw err;
-    // console.log("connected as id " + connection.threadId + "\n");
-
+   
 });
 
 // validateInput to make sure the user inputs is valid
@@ -34,7 +33,7 @@ function validateInput(value) {
     }
 }
 
-
+//query data from the database table and display them 
 function displayProducts() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
@@ -44,7 +43,7 @@ function displayProducts() {
             head: ["Item ID", "Product Name", "Catergory", "Price", "Quantity"],
             colWidths: [10, 25, 25, 10, 14]
         });
-        //loop through and display o
+      
         for (let i = 0; i < res.length; i++) {
             productTable.push(
                 [res[i].item_id, res[i].product_name, res[i].department_name, "$" + res[i].price, res[i].stock_quantity]
@@ -66,7 +65,7 @@ function customerPrompt() {
         {
             type: 'input',
             name: 'item_id',
-            message: 'Please enter the Item ID which you would like to purchase.',
+            message: 'Please enter the Item ID of the product you would like to purchase.',
             validate: validateInput,
             filter: Number
         },
@@ -74,7 +73,7 @@ function customerPrompt() {
             //Prompt the customer to select quantity
             type: 'input',
             name: 'quantity',
-            message: 'How many do you need?',
+            message: 'How many would you like to buy?',
             validate: validateInput,
             filter: Number
         }
@@ -84,8 +83,7 @@ function customerPrompt() {
         const item = parseInt(answer.item_id);
         const quantity = parseInt(answer.quantity);
 
-        // Query db to confirm that the given item ID exists in the desired quantity
-        // const queryStr = 'SELECT * FROM products WHERE ?';
+
         const querySql = 'SELECT * FROM products WHERE ?';
         connection.query(querySql, {item_id: item}, function (err, res) {
             if (err) throw err;
@@ -127,7 +125,7 @@ function customerPrompt() {
                     console.log('Please modify your order.');
                     console.log("\n---------------------------------------------------------------------\n");
 
-                    displayProducts();
+                    customerPrompt();
                 }
             }
         })
